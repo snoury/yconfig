@@ -6,13 +6,13 @@
 #define assert(COND) if(!(COND)) { std::cerr << "Assertion failed (line " << __LINE__ \
                                              <<"): " << #COND << std::endl; exit(-1); }
 
-struct float4 { float x, y, z, w; };
-struct Player { std::string name; unsigned int life; float4 position; };
+struct float3 { float x, y, z; };
+struct Player { std::string name; unsigned int life; float3 position; };
 
-void operator>>(const Config::Node &n, float4 &f4)
+void operator>>(const Config::Node &n, float3 &f3)
 {
-  assert(n.GetTag() == "!float4"); // optional type-check
-  n[0] >> f4.x; n[1] >> f4.y; n[2] >> f4.z; n[3] >> f4.w;
+  assert(n.GetTag() == "!float3"); // optional type-check
+  n[0] >> f3.x; n[1] >> f3.y; n[2] >> f3.z;
 }
 
 void operator>>(const Config::Node &n, Player &p)
@@ -23,9 +23,9 @@ void operator>>(const Config::Node &n, Player &p)
   n["position"] >> p.position;
 }
 
-std::ostream &operator<<(std::ostream &s, const float4 &f4)
+std::ostream &operator<<(std::ostream &s, const float3 &f3)
 {
-  s << "(" << f4.x << ", " << f4.y << ", " << f4.z << ", " << f4.w << ")";
+  s << "(" << f3.x << ", " << f3.y << ", " << f3.z << ")";
 }
 
 std::ostream &operator<<(std::ostream &s, const Player &p)
@@ -37,7 +37,7 @@ int main(int argc, char **argv)
 {
   std::cout << "#### Test case 1 ####" << std::endl;
   {
-    std::ifstream f("test/configtest1.yaml");
+    std::ifstream f("tests/configtest1.yaml");
     Config cfg(f);
 
     unsigned int width = cfg["screen/width"];
@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 
   std::cout << "#### Test case 2 ####" << std::endl;
   {
-    std::ifstream f("test/configtest2.yaml");
+    std::ifstream f("tests/configtest2.yaml");
     Config cfg(f);
 
     std::vector<Player> players = cfg["players"];
@@ -67,7 +67,7 @@ int main(int argc, char **argv)
   
   std::cout << "#### Test case 3 ####" << std::endl;
   {
-    std::ifstream f("test/configtest3.yaml");
+    std::ifstream f("tests/configtest3.yaml");
     Config cfg(f);
     
     const Config::Node &techniques = cfg["techniques"];
