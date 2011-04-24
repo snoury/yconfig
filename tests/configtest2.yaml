@@ -1,0 +1,9 @@
+players:
+  - !Player
+    name: Player 1
+    life: 100
+    position: !float4 [1.0, 0.0, 0.0, 0.0]
+  - !Player
+    name: Player 2
+    life: 80
+    position: !float4 [0.0, 1.0, 0.0, 0.0]

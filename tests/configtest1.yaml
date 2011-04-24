@@ -1,0 +1,7 @@
+screen:
+  width: 1920
+  height: 1080
+
+constants:
+  e: 2.7183
+  pi: 3.1415

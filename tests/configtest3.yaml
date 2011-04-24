@@ -1,0 +1,24 @@
+phong_vs: &phongvs
+  varying vec3 N, v;
+  void main()
+  {
+    v = vec3(gl_ModelViewMatrix * gl_Vertex);
+    N = normalize(gl_NormalMatrix * gl_Normal);
+    gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
+  }
+
+phong_fs: &phongfs
+  varying vec3 N, v;
+  void main()
+  {
+    vec3 L = normalize(gl_LightSource[0].position.xyz - v);
+    vec4 Idiff = gl_FrontLightProduct[0].diffuse * max(dot(N, L), 0.0);
+    gl_FragColor = clamp(Idiff, 0.0, 1.0);
+  }
+
+techniques:
+  - name: PhongShading
+    passes:
+      - name: PhongPass0
+        vertex_shader: *phongvs
+        fragment_shader: *phongfs
